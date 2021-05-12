@@ -1,0 +1,54 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+jar {
+    exclude('com/example/logger/impl/StaticLoggerBinder.class')
+}
+
+dependencies {
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    api 'androidx.core:core-ktx:1.3.2'
+
+    //test
+    testImplementation 'junit:junit:4.+'
+}
+
+//task clearJar(type: Delete) {
+//    delete 'build/libs/logger-api.jar'
+//}
+////打包任务
+//task makeJar(type: Jar) {
+//    baseName 'logger-api'
+//    from('build/tmp/kotlin-classes/release')
+//    into('')
+//    exclude('BuildConfig.class', 'org/example/impl/StaticLoggerBinder.class',)
+//    exclude('META-INF/*')
+//    //去掉R$开头的文件
+//    exclude { it.name.startsWith('R$') }
+//}
+//makeJar.dependsOn(clearJar)
+//
+//apply plugin: 'maven'
+//
+////配置需要上传到maven仓库的文件
+//artifacts {
+//    archives makeJar
+//}
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        repository(url: uri("${rootProject.projectDir}/repo"))
+//        pom.project {
+//            groupId = "com.example.logger.api"
+//            artifactId = "logger-api"
+//            version = "1.0.0"
+//            packaging = 'jar'
+//        }
+//    }
+//}
