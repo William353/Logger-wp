@@ -32,5 +32,5 @@ jobs:
       - name: Publish package
         run: ./gradlew :logger-api:uploadArchives
         env:
-          MAVEN_USERNAME: ${{ secrets.MAVEN_USER }}
-          MAVEN_PASSWORD: ${{ secrets.MAVEN_PWD }}
+          MAVEN_USER: ${{ secrets.MAVEN_USER }}
+          MAVEN_PWD: ${{ secrets.MAVEN_PWD }}
