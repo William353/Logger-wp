@@ -33,10 +33,10 @@ android {
 }
 
 dependencies {
-    implementation project(":logger-api")
-//    implementation "com.example.logger.api:logger-api:1.0.0"
+//    implementation project(":logger-api")
+    implementation "io.github.william353.logger:logger-api:$VERSION_NAME"
 
     //test
-    testImplementation 'junit:junit:4.+'
+    testImplementation 'junit:junit:4.13.2'
     testImplementation 'com.github.stefanbirkner:system-rules:1.19.0'
 }

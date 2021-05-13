@@ -1,0 +1,76 @@
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+    archives javadocJar
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { deployment -> signing.signPom(deployment) }
+
+            //构件标识符
+            pom.artifactId = POM_ARTIFACT_ID_API
+            //全球唯一标识符
+            pom.groupId = POM_GROUP_ID
+            //构件版本
+            pom.version = VERSION_NAME
+
+            repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: System.getenv("MAVEN_USER"), password: System.getenv("MAVEN_PWD"))
+            }
+
+            snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: System.getenv("MAVEN_USER"), password: System.getenv("MAVEN_PWD"))
+            }
+
+            pom.project {
+                name project.name
+                packaging 'jar'
+                description 'underscore string in java'
+                url 'https://github.com/William353/Logger-wp'
+
+                scm {
+                    url 'https://github.com/William353/Logger-wp'
+                    connection 'https://github.com/qianyan/underscore.string.java.git'
+                    developerConnection 'git@github.com:William353/Logger-wp.git'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT Licence'
+                        url 'https://raw.githubusercontent.com/qianyan/underscore.string.java/master/LICENSE'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'William353'
+                        name 'wangpeng'
+                        email 'wangpeng181105@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
+
+signing {
+    required { gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
