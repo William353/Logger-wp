@@ -11,7 +11,8 @@ java {
 }
 
 dependencies {
-    implementation "io.github.william353.logger:logger-api:$VERSION_NAME"
+    implementation project(":logger-api")
+//    implementation "io.github.william353.logger:logger-api:$VERSION_NAME"
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api 'androidx.core:core-ktx:1.3.2'
 
