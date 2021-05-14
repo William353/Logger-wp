@@ -30,8 +30,6 @@ uploadArchives {
                 artifactId = POM_ARTIFACT_ID_CONSOLE
             }
 
-            println("111111 $artifactId")
-
             //构件标识符
             pom.artifactId = artifactId
             //全球唯一标识符
