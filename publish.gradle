@@ -23,8 +23,17 @@ uploadArchives {
         mavenDeployer {
             beforeDeployment { deployment -> signing.signPom(deployment) }
 
+            def artifactId = ""
+            if (project.name == "logger-api") {
+                artifactId = POM_ARTIFACT_ID_API
+            }else if (project.name == "logger-console") {
+                artifactId = POM_ARTIFACT_ID_CONSOLE
+            }
+
+            println("111111 $artifactId")
+
             //构件标识符
-            pom.artifactId = POM_ARTIFACT_ID_API
+            pom.artifactId = artifactId
             //全球唯一标识符
             pom.groupId = POM_GROUP_ID
             //构件版本
