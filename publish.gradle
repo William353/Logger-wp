@@ -52,9 +52,9 @@ uploadArchives {
                 url 'https://github.com/William353/Logger-wp'
 
                 scm {
-                    url 'https://github.com/William353/Logger-wp'
-                    connection 'https://github.com/qianyan/underscore.string.java.git'
-                    developerConnection 'git@github.com:William353/Logger-wp.git'
+                    connection = "scm:git:git://github.com/William353/Logger-wp.git"
+                    developerConnection = "scm:git:git@github.com:William353/Logger-wp.git"
+                    url = "https://github.com/William353/Logger-wp"
                 }
 
                 licenses {

@@ -28,14 +28,21 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
 
-      - name: Publish logger-console
-        run: ./gradlew :logger-console:uploadArchives
-        env:
-          MAVEN_USER: ${{ secrets.MAVEN_USER }}
-          MAVEN_PWD: ${{ secrets.MAVEN_PWD }}
-        
-      - name: Publish logger-api
+      - name: Publish logger-api jar
         run: ./gradlew :logger-api:uploadArchives
         env:
           MAVEN_USER: ${{ secrets.MAVEN_USER }}
           MAVEN_PWD: ${{ secrets.MAVEN_PWD }}
+
+      - name: Publish logger-console jar
+          run: ./gradlew :logger-console:uploadArchives
+          env:
+            MAVEN_USER: ${{ secrets.MAVEN_USER }}
+            MAVEN_PWD: ${{ secrets.MAVEN_PWD }}
+
+      - name: Publish logger-logcat aar
+          run: ./gradlew :logger-logcat:uploadArchives
+          env:
+            MAVEN_USER: ${{ secrets.MAVEN_USER }}
+            MAVEN_PWD: ${{ secrets.MAVEN_PWD }}
+

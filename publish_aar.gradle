@@ -1,0 +1,88 @@
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+def isReleaseBuild() {
+    return VERSION_NAME.contains("SNAPSHOT") == false
+}
+
+def getReleaseRepositoryUrl() {
+    return "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+}
+
+def getSnapshotRepositoryUrl() {
+    return "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+}
+
+def getRepositoryUsername() {
+    return System.getenv("MAVEN_USER")
+}
+
+def getRepositoryPassword() {
+    return System.getenv("MAVEN_PWD")
+}
+
+afterEvaluate { project ->
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                configurePOM(pom)
+
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: getReleaseRepositoryUrl()) {
+                    authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+                }
+                snapshotRepository(url: getSnapshotRepositoryUrl()) {
+                    authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+                }
+            }
+        }
+    }
+    signing {
+        required { isReleaseBuild() && gradle.taskGraph.hasTask("uploadArchives") }
+        sign configurations.archives
+    }
+
+    task androidSourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.sourceFiles
+    }
+
+    artifacts {
+        archives androidSourcesJar
+    }
+}
+
+private configurePOM(def pom) {
+    pom.project {
+        groupId POM_GROUP_ID
+        artifactId POM_ARTIFACT_ID_LOGCAT
+        version VERSION_NAME
+        name project.name
+        packaging 'aar'
+        url = "https://github.com/William353/Logger-wp"
+        description project.description ?: project.name
+
+        scm {
+            connection = "scm:git:git://github.com/William353/Logger-wp.git"
+            developerConnection = "scm:git:git@github.com:William353/Logger-wp.git"
+            url = "https://github.com/William353/Logger-wp"
+        }
+
+        licenses {
+            license {
+                name 'MIT Licence'
+                url 'https://raw.githubusercontent.com/qianyan/underscore.string.java/master/LICENSE'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'William353'
+                name 'wangpeng'
+                email 'wangpeng181105@gmail.com'
+            }
+        }
+    }
+}
