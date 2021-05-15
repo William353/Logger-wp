@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: uploadArchives
+name: Publish
 
 # Controls when the action will run.
 on:
@@ -29,21 +29,12 @@ jobs:
           distribution: 'adopt'
 
       - name: Publish logger-console
-        run: ./gradlew :logger-console:uploadArchives
+        run: |
+          ./gradlew :logger-console:uploadArchives
+          ./gradlew :logger-api:uploadArchives
+          ./gradlew :logger-logcat:uploadArchives
         env:
           MAVEN_USER: ${{ secrets.MAVEN_USER }}
           MAVEN_PWD: ${{ secrets.MAVEN_PWD }}
             
-      - name: Publish logger-api
-        run: ./gradlew :logger-api:uploadArchives
-        env:
-          MAVEN_USER: ${{ secrets.MAVEN_USER }}
-          MAVEN_PWD: ${{ secrets.MAVEN_PWD }}
-            
-      - name: Publish logger-logcat
-        run: ./gradlew :logger-logcat:uploadArchives
-        env:
-          MAVEN_USER: ${{ secrets.MAVEN_USER }}
-          MAVEN_PWD: ${{ secrets.MAVEN_PWD }}        
-        
-
+     
