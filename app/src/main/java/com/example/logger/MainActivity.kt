@@ -2,11 +2,12 @@ package com.example.logger
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.logger.api.LoggerFactory
+import com.example.logger.api.Logger
+import com.example.logger.api.logger
 
 class MainActivity : AppCompatActivity() {
 
-    private val logger = LoggerFactory.getLogger(MainActivity::class.simpleName.toString())
+    private val logger: Logger by logger()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

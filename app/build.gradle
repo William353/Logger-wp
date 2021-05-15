@@ -35,8 +35,8 @@ android {
 }
 
 dependencies {
-//    implementation project(":logger-api")
-    implementation "io.github.william353.logger:logger-api:$VERSION_NAME"
+    implementation project(":logger-api")
+//    implementation "io.github.william353.logger:logger-api:$VERSION_NAME"
     implementation project(':logger-console')
 //    implementation project(':logger-implB')
 
