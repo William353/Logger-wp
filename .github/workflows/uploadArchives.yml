@@ -34,14 +34,15 @@ jobs:
           MAVEN_USER: ${{ secrets.MAVEN_USER }}
           MAVEN_PWD: ${{ secrets.MAVEN_PWD }}
 
+      - name: Publish logger-logcat aar
+          run: ./gradlew :logger-logcat:uploadArchives
+          env:
+            MAVEN_USER: ${{ secrets.MAVEN_USER }}
+            MAVEN_PWD: ${{ secrets.MAVEN_PWD }}
+            
       - name: Publish logger-api
         run: ./gradlew :logger-api:uploadArchives
         env:
           MAVEN_USER: ${{ secrets.MAVEN_USER }}
           MAVEN_PWD: ${{ secrets.MAVEN_PWD }}
 
-      - name: Publish logger-logcat aar
-          run: ./gradlew :logger-logcat:uploadArchives
-          env:
-            MAVEN_USER: ${{ secrets.MAVEN_USER }}
-            MAVEN_PWD: ${{ secrets.MAVEN_PWD }}
