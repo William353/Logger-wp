@@ -30,11 +30,16 @@ jobs:
 
       - name: Publish logger-console
         run: |
-          ./gradlew :logger-console:uploadArchives
-          ./gradlew :logger-api:uploadArchives
-          ./gradlew :logger-logcat:uploadArchives
+          echo "Create GPG private key"
+          echo $GPG_KEY_ARMOR | base64 --decode > $GITHUB_WORKSPACE/secring.gpg
+          ./gradlew :logger-console:uploadArchives -Psigning.keyId=${GPG_KEY_ID} -Psigning.password=${GPG_PASSPHRASE} -Psigning.secretKeyRingFile=${GITHUB_WORKSPACE}/secring.gpg -S --no-daemon
+          ./gradlew :logger-api:uploadArchives -Psigning.keyId=${GPG_KEY_ID} -Psigning.password=${GPG_PASSPHRASE} -Psigning.secretKeyRingFile=${GITHUB_WORKSPACE}/secring.gpg -S --no-daemon
+          ./gradlew :logger-logcat:uploadArchives -Psigning.keyId=${GPG_KEY_ID} -Psigning.password=${GPG_PASSPHRASE} -Psigning.secretKeyRingFile=${GITHUB_WORKSPACE}/secring.gpg -S --no-daemon
         env:
           MAVEN_USER: ${{ secrets.MAVEN_USER }}
           MAVEN_PWD: ${{ secrets.MAVEN_PWD }}
+          GPG_KEY_ARMOR: ${{ secrets.GPG_KEY_ARMOR }}
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
             
      
